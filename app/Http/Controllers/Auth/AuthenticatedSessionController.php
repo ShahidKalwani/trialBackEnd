@@ -40,4 +40,9 @@ class AuthenticatedSessionController extends Controller
 
         return response()->noContent();
     }
+
+
+    public  function checkRoles () {
+
+    }
 }

@@ -2,12 +2,17 @@
 
 namespace App\Traits;
 
-use App\Permission;
-use App\Role;
+use App\Models\Permission;
+use App\Models\Role;
 
 trait HasPermissionsTrait {
-    public  function givePermissionTo(... $permission) {
-
+    public  function givePermissionTo(... $permissions) {
+        $permissions = $this->getAllPermissions($permissions);
+        if($permissions === null) {
+            return $this;
+        }
+        $this->permissions()->saveMany($permissions);
+        return $this;
     }
 
     public function withdrawPermissionsTo( ... $permissions ) {
@@ -49,7 +54,13 @@ trait HasPermissionsTrait {
 
     public function roles() {
 
-        return $this->belongsToMany(Role::class,'users_roles');
+        return $this->belongsToMany(Role::class,'user_roles');
+
+    }
+
+    public function permissions() {
+
+        return $this->belongsToMany(Permission::class,'user_permissions');
 
     }
 

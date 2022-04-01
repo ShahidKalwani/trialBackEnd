@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
+            //
             $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->string("module");
+            $table->string('title');
+            $table->string('post');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('posts');
     }
 };
